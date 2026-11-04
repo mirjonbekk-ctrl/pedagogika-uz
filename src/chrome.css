@@ -1,0 +1,144 @@
+/* Header menu drawer, left rail, right aside, footer extras */
+
+/* Header tools: hamburger is the full-menu trigger at every width */
+.header-tools { gap: 6px; }
+.menu-btn { display: flex; }
+.header-tools .icon-btn, .header-tools .lang-btn { display: grid; }
+.lang-btn { width: auto; }
+
+/* Full menu drawer, opened by hamburger */
+.menu-drawer {
+  display: none;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 18px 40px rgba(22, 49, 79, .12);
+  position: sticky; top: 72px; z-index: 49;
+  max-height: calc(100vh - 72px); overflow-y: auto;
+}
+.menu-drawer.open { display: block; }
+.menu-drawer-inner { padding: 24px 0 32px; }
+.menu-tree {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px 32px;
+  align-items: start;
+}
+.menu-tree > li { break-inside: avoid; }
+.menu-tree > li > a,
+.menu-toggle {
+  display: flex; justify-content: space-between; align-items: center; width: 100%;
+  background: none; border: 0; padding: 10px 0; cursor: pointer;
+  font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: .02em;
+  color: var(--navy); text-align: left; border-bottom: 2px solid var(--line);
+}
+.menu-toggle span { color: var(--gold); font-size: 20px; line-height: 1; }
+.menu-tree > li > a:hover,
+.menu-toggle:hover { color: var(--blue); }
+.menu-sub { padding: 6px 0 12px 0; display: grid; gap: 2px; }
+.menu-sub a {
+  display: block; padding: 7px 0; font-size: 14px; font-weight: 500; color: var(--muted);
+}
+.menu-sub a:hover { color: var(--blue); }
+
+/* Mobile: drawer below header, single column */
+@media (max-width: 1100px) {
+  .menu-tree { grid-template-columns: repeat(2, 1fr); }
+  .menu-btn { display: flex; }
+  .header-cta { display: none; }
+}
+@media (max-width: 640px) {
+  .menu-drawer { top: 64px; max-height: calc(100vh - 64px); }
+  .menu-tree { grid-template-columns: 1fr; }
+  .header-tools .icon-btn, .header-tools .lang-btn { display: none; }
+}
+
+/* Left floating section rail (desktop only) */
+.left-rail {
+  display: none;
+}
+@media (min-width: 1101px) {
+  .left-rail {
+    display: flex; flex-direction: row; gap: 14px;
+    position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 40;
+    background: #fff; border-radius: 999px; padding: 8px 12px;
+    box-shadow: 0 10px 30px rgba(22, 49, 79, .15);
+  }
+  .left-rail a, .left-rail button {
+    width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--soft); border: 0; cursor: pointer; font-size: 18px; text-decoration: none;
+    transition: transform .2s ease, background .2s ease;
+  }
+  .left-rail a:hover, .left-rail button:hover { transform: scale(1.08); background: var(--gold-soft); }
+  .left-rail .rail-voice { background: #f28c28; box-shadow: 0 6px 16px rgba(242, 140, 40, .4); }
+  .left-rail .rail-svg, .left-rail .rail-svg svg { width: 40px; height: 40px; display: block; }
+  .left-rail a { position: relative; }
+  .left-rail a::after {
+    content: attr(data-label); position: absolute; bottom: calc(100% + 12px); left: 50%;
+    transform: translate(-50%, 6px); background: var(--navy); color: #fff; font-size: 13px; font-weight: 700;
+    padding: 8px 14px; border-radius: 8px; white-space: nowrap; pointer-events: none;
+    opacity: 0; transition: opacity .15s ease, transform .15s ease;
+  }
+  .left-rail a:hover::after, .left-rail a:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* News with right aside */
+.news-layout {
+  display: grid; grid-template-columns: 1fr 300px; gap: 32px; align-items: start;
+}
+.news-layout .news-grid { grid-template-columns: repeat(2, 1fr); }
+.right-aside { display: grid; gap: 18px; position: sticky; top: 96px; }
+.aside-card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 22px; border-top: 3px solid var(--navy);
+}
+.aside-card h3 { font-size: 16px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; color: var(--navy); }
+.aside-card ul { display: grid; }
+.aside-card li { border-bottom: 1px solid var(--line); }
+.aside-card li:last-child { border-bottom: 0; }
+.aside-card a {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  padding: 11px 0; font-size: 14px; font-weight: 600; color: var(--navy);
+}
+.aside-card a:hover { color: var(--blue); }
+.aside-card a span { color: var(--gold); }
+.aside-banner {
+  display: grid; gap: 6px; padding: 26px; border-radius: var(--radius);
+  background: linear-gradient(140deg, #1c3d62 0%, #0f2740 100%); color: #fff;
+  position: relative; overflow: hidden;
+}
+.aside-banner::after {
+  content: "▶"; position: absolute; right: 18px; bottom: 14px; font-size: 56px;
+  color: rgba(212, 169, 63, .25);
+}
+.aside-banner-tag {
+  justify-self: start; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+  background: var(--gold); color: var(--navy-deep); padding: 4px 10px; border-radius: 999px;
+}
+.aside-banner strong { font-size: 22px; font-weight: 800; letter-spacing: .02em; }
+.aside-banner span:last-child { font-size: 14px; color: rgba(255, 255, 255, .8); }
+
+@media (max-width: 1100px) {
+  .news-layout { grid-template-columns: 1fr; }
+  .right-aside { position: static; grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .news-layout .news-grid { grid-template-columns: 1fr; }
+  .right-aside { grid-template-columns: 1fr; }
+}
+
+/* Footer social icons: round buttons in the same style as the left rail */
+.footer-brand .socials { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.footer-brand .socials a {
+  width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(255, 255, 255, .1); color: #fff; font-size: 0;
+  transition: transform .2s ease, background .2s ease, color .2s ease;
+}
+.footer-brand .socials a:hover { transform: scale(1.08); background: var(--gold); color: var(--navy-deep); }
+.footer-brand .socials svg {
+  width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8;
+  stroke-linejoin: round; stroke-linecap: round;
+}
+.footer-brand .socials a[aria-label="Telegram"] svg path { fill: currentColor; stroke: none; }
+
+/* Footer sub-headings and contacts */
+.footer-sub { margin-top: 28px; }
+.footer-contacts li { color: rgba(255, 255, 255, .85); font-size: 15px; line-height: 1.5; }
+.footer-contacts a:hover { color: var(--gold); }

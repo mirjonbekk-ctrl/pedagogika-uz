@@ -1,0 +1,60 @@
+/* Desktop top navigation with dropdowns and the Markaz mega panel */
+
+@media (min-width: 1101px) {
+  .top-nav ul { gap: 4px; justify-content: center; }
+  .top-item { position: relative; }
+  .top-link {
+    display: inline-flex; align-items: center; gap: 6px; background: none; border: 0; cursor: pointer;
+    padding: 10px 12px; font: inherit; font-size: 15px; font-weight: 600; color: var(--navy);
+    border-bottom: 2px solid transparent; white-space: nowrap; border-radius: 6px 6px 0 0;
+  }
+  .top-link svg { width: 10px; height: 7px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+  .top-item.has-drop .top-link svg { transition: transform .2s ease; }
+  .top-item.is-open .top-link svg { transform: rotate(180deg); }
+  .top-item.is-open > .top-link,
+  .top-link:hover { color: var(--blue); }
+  .top-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  /* Simple dropdown */
+  .drop {
+    position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    min-width: 260px; background: #fff; border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: 0 18px 40px rgba(22, 49, 79, .14); padding: 10px; z-index: 60;
+    display: grid; gap: 2px; animation: navIn .18s ease;
+  }
+  .drop a {
+    display: block; padding: 10px 12px; border-radius: 8px; font-size: 14px; font-weight: 500;
+    color: var(--navy); white-space: nowrap;
+  }
+  .drop a:hover { background: var(--soft); color: var(--blue); }
+
+  /* Mega panel for Markaz */
+  .mega {
+    position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%);
+    width: min(1040px, 92vw); background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: 0 24px 50px rgba(22, 49, 79, .16); padding: 26px 30px 30px;
+    display: grid; grid-template-columns: 240px 1fr 1fr; gap: 0; z-index: 60;
+    animation: navIn .18s ease;
+  }
+  .mega-col { padding: 0 24px; border-left: 1px solid var(--line); }
+  .mega-col:first-child { padding-left: 0; border-left: 0; }
+  .mega-col h4 {
+    display: flex; align-items: center; gap: 10px; margin: 0 0 14px;
+    font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--gold);
+  }
+  .mega-col h4 span { width: 22px; height: 2px; background: var(--gold); display: inline-block; }
+  .mega-col ul { display: grid; gap: 2px; }
+  .mega-col:first-child ul { gap: 4px; }
+  .mega-col a {
+    display: block; padding: 7px 0; font-size: 14px; font-weight: 500; line-height: 1.4; color: var(--navy);
+  }
+  .mega-col a:hover { color: var(--blue); }
+  .mega-col:first-child a { font-size: 15px; font-weight: 600; }
+
+  .mega-col:nth-child(2) ul { grid-template-columns: 1fr; }
+}
+
+@keyframes navIn {
+  from { opacity: 0; transform: translate(-50%, -6px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}

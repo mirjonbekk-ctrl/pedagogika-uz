@@ -1,0 +1,100 @@
+/* Visual polish layer: hero shape, waves, richer cards */
+
+/* Hero: big sweeping shape + watermark emblem */
+.hero { padding-bottom: 150px; }
+.hero-visual { height: 560px; }
+.hero-shape {
+  left: 14%; right: -80px; top: -10px; bottom: 60px;
+  background: linear-gradient(170deg, #b9c7d6 0%, #6f8aa6 40%, #1c3d62 100%);
+  border-radius: 320px 0 0 0 / 260px 0 0 0;
+  clip-path: none;
+  opacity: 1;
+  box-shadow: inset 0 0 80px rgba(255, 255, 255, .12);
+}
+.hero-curve path { stroke-width: 3.5; }
+.hero-mark {
+  left: 0; top: 18%; width: 340px; height: 340px;
+  font-size: 150px; color: rgba(255, 255, 255, .14);
+  border: 2px solid rgba(255, 255, 255, .18);
+  background: radial-gradient(circle, rgba(255, 255, 255, .06), transparent 70%);
+}
+.wave { position: absolute; left: 0; width: 100%; display: block; pointer-events: none; }
+.wave path { fill: var(--navy); }
+.wave-bottom { bottom: -1px; height: 120px; }
+.hero-tagline { bottom: 150px; }
+
+/* Quick box floats over the wave */
+.quick { margin-top: -110px; }
+
+/* Section wave dividers */
+.section-navy { position: relative; }
+.section-navy::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 70px;
+  background: var(--white);
+  clip-path: ellipse(60% 100% at 50% 0);
+}
+
+/* Stats cards */
+.stat { background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
+.stat strong { color: var(--navy); }
+
+/* News cards with thumb */
+.news-card { padding: 0; overflow: hidden; border-top: 0; }
+.news-thumb {
+  position: relative; height: 150px; display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 16px 18px; color: #fff;
+  background: linear-gradient(135deg, #5d7898 0%, #16314f 100%);
+}
+.news-thumb > span { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); font-size: 52px; opacity: .9; }
+.news-thumb time {
+  align-self: flex-start; font-size: 12px; font-weight: 700; letter-spacing: .04em;
+  background: var(--gold); color: var(--navy-deep); padding: 4px 10px; border-radius: 999px;
+}
+.news-body { display: flex; flex-direction: column; gap: 12px; padding: 22px 24px 26px; }
+
+/* Course cards with icon */
+.course { padding: 32px; }
+.course-ico {
+  width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center;
+  font-size: 26px; background: var(--soft); border: 1px solid var(--line);
+}
+.course-num { position: absolute; right: 24px; top: 20px; font-size: 28px; }
+.course:hover .course-ico { background: var(--gold-soft); border-color: var(--gold); }
+
+/* Video thumbs: pattern + color */
+.video-thumb {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(212, 169, 63, .45), transparent 45%),
+    linear-gradient(135deg, #6f8aa6 0%, #1c3d62 100%);
+}
+.video:nth-child(2) .video-thumb { background: radial-gradient(circle at 20% 80%, rgba(212, 169, 63, .4), transparent 45%), linear-gradient(135deg, #3f6b99 0%, #0f2740 100%); }
+.video:nth-child(3) .video-thumb { background: radial-gradient(circle at 70% 70%, rgba(212, 169, 63, .4), transparent 45%), linear-gradient(135deg, #9bb0c6 0%, #2a4f78 100%); }
+
+/* Footer top wave */
+.site-footer { position: relative; margin-top: 0; }
+.site-footer::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 60px;
+  background: var(--white);
+  clip-path: ellipse(70% 100% at 50% 0);
+}
+
+/* Header polish */
+.site-header { box-shadow: 0 1px 0 rgba(22, 49, 79, .04); }
+.brand-logo { box-shadow: inset 0 0 0 4px #fff, inset 0 0 0 6px var(--gold); }
+
+/* Responsive adjustments for the new layers */
+@media (max-width: 900px) {
+  .hero { padding-bottom: 110px; }
+  .hero-visual { height: 420px; }
+  .hero-mark { width: 240px; height: 240px; font-size: 100px; }
+  .quick { margin-top: -80px; }
+}
+@media (max-width: 640px) {
+  .hero { padding-bottom: 90px; }
+  .hero-visual { height: 300px; }
+  .hero-shape { left: 8%; right: -40px; border-radius: 180px 0 0 0 / 160px 0 0 0; }
+  .hero-mark { width: 170px; height: 170px; font-size: 70px; top: 16%; }
+  .quick { margin-top: -60px; }
+  .wave-bottom { height: 70px; }
+  .news-thumb { height: 120px; }
+}
