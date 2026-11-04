@@ -138,6 +138,22 @@
 }
 .footer-brand .socials a[aria-label="Telegram"] svg path { fill: currentColor; stroke: none; }
 
+/* Back-to-top button: appears after scrolling down */
+.to-top {
+  position: fixed; right: 24px; bottom: 24px; z-index: 45;
+  width: 48px; height: 48px; border: 0; border-radius: 50%; cursor: pointer;
+  background: var(--navy); color: #fff; font-size: 22px; font-weight: 700; line-height: 1;
+  box-shadow: 0 10px 24px -8px rgba(22, 49, 79, .5);
+  opacity: 0; transform: translateY(12px); pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease, background .2s ease;
+}
+.to-top.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { background: var(--blue); }
+.to-top:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+@media (max-width: 640px) {
+  .to-top { bottom: 88px; right: 16px; }
+}
+
 /* Footer sub-headings and contacts */
 .footer-sub { margin-top: 28px; }
 .footer-contacts li { color: rgba(255, 255, 255, .85); font-size: 15px; line-height: 1.5; }

@@ -837,7 +837,31 @@ function Footer() {
   );
 }
 
-// Sahifa tuzilmasi: bo‘limlar tartibi shu yerda belgilanadi (hero: rasmli banner, o‘ng tomonda; tagline va ticker olib tashlandi; ikonlar yangilandi)
+// Sahifa tuzilmasi: bo‘limlar tartibi shu yerda belgilanadi (hero: rasmli banner, o‘ng tomonda; tagline va ticker olib tashlandi; ikonlar yangilandi; yuqoriga tugmasi)
+// “Yuqoriga” tugmasi: sahifa pastga aylantirilganda chiqadi, bosilganda tepaga qaytaradi
+function ToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 600);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <button
+      type="button"
+      className={`to-top${visible ? ' is-visible' : ''}`}
+      aria-label="Yuqoriga"
+      title="Yuqoriga"
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    >
+      ↑
+    </button>
+  );
+}
+
 export default function App() {
   return (
     <>
@@ -862,6 +886,7 @@ export default function App() {
         <Faq />
       </main>
       <Footer />
+      <ToTop />
       <nav className="mobile-bar" aria-label="Tezkor tugmalar">
         <a href="#kurslar" aria-label="Kurslar">📚</a>
         <a href="#kabinet" aria-label="Kabinet">👤</a>
