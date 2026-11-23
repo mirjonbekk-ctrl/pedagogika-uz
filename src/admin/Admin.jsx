@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './admin.css'
+import Login from './Login.jsx'
+import { supabase, supabaseReady, fetchRole, ROLE_LABEL } from './supabase.js'
 
 /* ---------- Icons (inline, stroke-based) ---------- */
 const paths = {
@@ -72,9 +74,9 @@ const nav = [
   { id: 'center', label: 'Markaz haqida', icon: 'pin' },
   { id: 'msgs', label: 'Murojaatlar', icon: 'mail', badge: 12 },
   { id: 'stats', label: 'Statistika va hisobotlar', icon: 'chart' },
-  { id: 'seo', label: 'SEO va sayt sozlamalari', icon: 'settings' },
-  { id: 'roles', label: 'Foydalanuvchilar va rollar', icon: 'users' },
-  { id: 'system', label: 'Tizim sozlamalari', icon: 'settings' },
+  { id: 'seo', label: 'SEO va sayt sozlamalari', icon: 'settings', only: ['super_admin'] },
+  { id: 'roles', label: 'Foydalanuvchilar va rollar', icon: 'users', only: ['super_admin'] },
+  { id: 'system', label: 'Tizim sozlamalari', icon: 'settings', only: ['super_admin'] },
 ]
 
 const kpis = [
@@ -203,7 +205,7 @@ function Sparkline() {
 }
 
 /* ---------- Layout pieces ---------- */
-function Sidebar({ active, onSelect, open, onClose }) {
+function Sidebar({ nav, active, onSelect, open, onClose }) {
   const [openGroups, setOpenGroups] = useState({ content: true, edu: true })
   const toggle = (id) => setOpenGroups((g) => ({ ...g, [id]: !g[id] }))
   return (
@@ -414,6 +416,22 @@ function Placeholder({ title }) {
 export default function Admin() {
   const [active, setActive] = useState('dash')
   const [menuOpen, setMenuOpen] = useState(false)
+  const [session, setSession] = useState(undefined) // undefined = yuklanmoqda, null = kirilmagan
+  const [profile, setProfile] = useState({ role: null, fullName: null })
+
+  useEffect(() => {
+    if (!supabaseReady) { setSession(null); return undefined }
+    supabase.auth.getSession().then(({ data }) => setSession(data.session))
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => setSession(s))
+    return () => sub.subscription.unsubscribe()
+  }, [])
+
+  useEffect(() => {
+    if (!session) return
+    fetchRole(session.user.id).then(setProfile)
+  }, [session])
+
+  const role = profile.role
   const label = (() => {
     const flat = nav.flatMap((n) => (n.children ? [n, ...n.children] : [n]))
     return flat.find((n) => n.id === active)?.label || ''
@@ -421,9 +439,23 @@ export default function Admin() {
 
   const select = (id) => { setActive(id); setMenuOpen(false) }
 
+  async function logout() {
+    await supabase.auth.signOut()
+    setSession(null)
+  }
+
+  if (session === undefined) {
+    return <div className="login-wrap"><p className="muted">Yuklanmoqda…</p></div>
+  }
+  if (!session) {
+    return <Login onLoggedIn={() => {}} />
+  }
+
+  const visibleNav = nav.filter((n) => !n.only || n.only.includes(role))
+
   return (
     <div className="admin">
-      <Sidebar active={active} onSelect={select} open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <Sidebar nav={visibleNav} active={active} onSelect={select} open={menuOpen} onClose={() => setMenuOpen(false)} />
       {menuOpen && <div className="scrim" onClick={() => setMenuOpen(false)} aria-hidden="true" />}
       <div className="main">
         <header className="topbar">
@@ -443,11 +475,14 @@ export default function Admin() {
           </button>
           <button className="lang">UZ <Icon name="down" size={12} /></button>
           <div className="profile">
-            <span className="avatar tone-navy">A</span>
+            <span className="avatar tone-navy">{(profile.fullName || session.user.email || 'A').charAt(0).toUpperCase()}</span>
             <div className="profile-text">
-              <div className="p-name">Administrator</div>
-              <div className="p-role">Super Admin</div>
+              <div className="p-name">{profile.fullName || session.user.email}</div>
+              <div className="p-role">{ROLE_LABEL[role] || 'Rol belgilanmagan'}</div>
             </div>
+            <button className="icon-btn logout" onClick={logout} aria-label="Chiqish" title="Chiqish">
+              <Icon name="arrow" size={16} />
+            </button>
           </div>
         </header>
 
