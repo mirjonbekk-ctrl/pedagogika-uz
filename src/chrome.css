@@ -56,19 +56,19 @@
 }
 @media (min-width: 1101px) {
   .left-rail {
-    display: flex; flex-direction: row; gap: 14px;
+    display: flex; flex-direction: row; gap: 8px;
     position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 40;
-    background: #fff; border-radius: 999px; padding: 8px 12px;
+    background: #fff; border-radius: 999px; padding: 5px 8px;
     box-shadow: 0 10px 30px rgba(22, 49, 79, .15);
   }
   .left-rail a, .left-rail button {
-    width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
+    width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
     background: var(--soft); border: 0; cursor: pointer; font-size: 18px; text-decoration: none;
     transition: transform .2s ease, background .2s ease;
   }
   .left-rail a:hover, .left-rail button:hover { transform: scale(1.08); background: var(--gold-soft); }
   .left-rail .rail-voice { background: #f28c28; box-shadow: 0 6px 16px rgba(242, 140, 40, .4); }
-  .left-rail .rail-svg, .left-rail .rail-svg svg { width: 40px; height: 40px; display: block; }
+  .left-rail .rail-svg, .left-rail .rail-svg svg { width: 24px; height: 24px; display: block; }
   .left-rail a { position: relative; }
   .left-rail a::after {
     content: attr(data-label); position: absolute; bottom: calc(100% + 12px); left: 50%;
